@@ -1,0 +1,43 @@
+version: 1
+flags:
+  new_checkout:
+    enabled: true
+    type: "bool"
+    variants:
+      true: 50
+      false: 50
+    rules:
+      - when:
+          all:
+            - attr: "plan"
+              op: "eq"
+              value: "pro"
+        then:
+          variants:
+            true: 90
+            false: 10
+    default: false
+
+  checkout_theme:
+    enabled: true
+    type: "string"
+    variants:
+      red: 40
+      blue: 30
+      green: 30
+    rules:
+      - when:
+          all:
+            - attr: "theme"
+              op: "eq"
+              value: "dark"
+        then:
+          variants:
+            black: 100
+    default: "red"
+
+  disabled_flag:
+    enabled: false
+    type: "bool"
+    default: true
+

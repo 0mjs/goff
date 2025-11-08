@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      
+      - name: Run linter
+        run: |
+          go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+          golangci-lint run
+      
+      - name: Run tests
+        run: go test -v -race ./...
+      
+      - name: Run fuzz tests
+        run: go test -fuzztime=30s -fuzz=FuzzLoadFromBytes ./internal/config/...
+        continue-on-error: true
+      
+      - name: Run fuzz tests (rules)
+        run: go test -fuzztime=30s -fuzz=FuzzEvalRule ./internal/eval/...
+        continue-on-error: true
+      
+      - name: Build
+        run: go build ./...
+      
+      - name: Build CLI
+        run: go build -o ffctl ./cmd/ffctl
+      
+      - name: Smoke test benchmarks
+        run: go test -bench=. -benchtime=100ms ./internal/eval/... | head -20
+
