@@ -23,17 +23,17 @@ func TestGolden_EvalBool(t *testing.T) {
 	}
 
 	tests := []struct {
-		name     string
-		ctx      Context
-		def      bool
-		want     bool
+		name       string
+		ctx        Context
+		def        bool
+		want       bool
 		wantReason Reason
 	}{
 		{
 			name: "pro plan user",
 			ctx: Context{
 				Key: "user:pro1",
-				Attrs: map[string]interface{}{
+				Attrs: map[string]any{
 					"plan": "pro",
 				},
 			},
@@ -45,7 +45,7 @@ func TestGolden_EvalBool(t *testing.T) {
 			name: "basic plan user",
 			ctx: Context{
 				Key: "user:basic1",
-				Attrs: map[string]interface{}{
+				Attrs: map[string]any{
 					"plan": "basic",
 				},
 			},
@@ -56,7 +56,7 @@ func TestGolden_EvalBool(t *testing.T) {
 			name: "no attributes",
 			ctx: Context{
 				Key:   "user:1",
-				Attrs: map[string]interface{}{},
+				Attrs: map[string]any{},
 			},
 			def:        false,
 			wantReason: Match, // or Percent
@@ -102,17 +102,17 @@ func TestGolden_EvalString(t *testing.T) {
 	}
 
 	tests := []struct {
-		name     string
-		ctx      Context
-		def      string
-		want     string
+		name       string
+		ctx        Context
+		def        string
+		want       string
 		wantReason Reason
 	}{
 		{
 			name: "dark theme user",
 			ctx: Context{
 				Key: "user:dark1",
-				Attrs: map[string]interface{}{
+				Attrs: map[string]any{
 					"theme": "dark",
 				},
 			},
@@ -124,7 +124,7 @@ func TestGolden_EvalString(t *testing.T) {
 			name: "light theme user",
 			ctx: Context{
 				Key: "user:light1",
-				Attrs: map[string]interface{}{
+				Attrs: map[string]any{
 					"theme": "light",
 				},
 			},
@@ -168,7 +168,7 @@ func TestGolden_DisabledFlag(t *testing.T) {
 		t.Fatal("flag 'disabled_flag' not found")
 	}
 
-	ctx := Context{Key: "user:1", Attrs: map[string]interface{}{}}
+	ctx := Context{Key: "user:1", Attrs: map[string]any{}}
 	result, reason := EvalBool(flag, "disabled_flag", ctx, false)
 
 	if result != true {
@@ -178,4 +178,3 @@ func TestGolden_DisabledFlag(t *testing.T) {
 		t.Errorf("EvalBool() reason = %v, want Disabled", reason)
 	}
 }
-

@@ -13,11 +13,11 @@ type Config struct {
 
 // Flag represents a single feature flag.
 type Flag struct {
-	Enabled  bool              `yaml:"enabled"`
-	Type     string            `yaml:"type"` // "bool" | "string"
-	Variants map[string]int    `yaml:"variants"` // For bool: "true"/"false" with 0-100 percentages; for string: variant names with percentages
-	Rules    []Rule            `yaml:"rules,omitempty"`
-	Default  any               `yaml:"default"` // bool for bool flags, string for string flags
+	Enabled  bool           `yaml:"enabled"`
+	Type     string         `yaml:"type"`     // "bool" | "string"
+	Variants map[string]int `yaml:"variants"` // For bool: "true"/"false" with 0-100 percentages; for string: variant names with percentages
+	Rules    []Rule         `yaml:"rules,omitempty"`
+	Default  any            `yaml:"default"` // bool for bool flags, string for string flags
 }
 
 // Rule represents a targeting rule for a flag.
@@ -34,9 +34,9 @@ type WhenCondition struct {
 
 // AttributeCondition represents a single attribute condition.
 type AttributeCondition struct {
-	Attr  string      `yaml:"attr"`
-	Op    string      `yaml:"op"` // eq | neq | gt | gte | lt | lte | in | contains | matches
-	Value interface{} `yaml:"value"`
+	Attr  string `yaml:"attr"`
+	Op    string `yaml:"op"` // eq | neq | gt | gte | lt | lte | in | contains | matches
+	Value any    `yaml:"value"`
 }
 
 // ThenAction represents the action to take when a rule matches.
@@ -217,4 +217,3 @@ func (r *Rule) Validate() error {
 
 	return nil
 }
-

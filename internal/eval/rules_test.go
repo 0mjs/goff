@@ -17,7 +17,7 @@ func TestEvalRule_AllConditions(t *testing.T) {
 
 	ctx := Context{
 		Key: "user:1",
-		Attrs: map[string]interface{}{
+		Attrs: map[string]any{
 			"plan":   "pro",
 			"region": "us",
 		},
@@ -44,7 +44,7 @@ func TestEvalRule_AnyConditions(t *testing.T) {
 
 	ctx := Context{
 		Key: "user:1",
-		Attrs: map[string]interface{}{
+		Attrs: map[string]any{
 			"plan": "pro",
 		},
 	}
@@ -69,7 +69,7 @@ func TestEvalRule_MissingAttribute(t *testing.T) {
 
 	ctx := Context{
 		Key:   "user:1",
-		Attrs: map[string]interface{}{},
+		Attrs: map[string]any{},
 	}
 
 	if EvalRule(rule, ctx) {
@@ -87,7 +87,7 @@ func TestEvalRule_ErrorHandling(t *testing.T) {
 
 	ctx := Context{
 		Key: "user:1",
-		Attrs: map[string]interface{}{
+		Attrs: map[string]any{
 			"value": "not a number",
 		},
 	}
@@ -97,4 +97,3 @@ func TestEvalRule_ErrorHandling(t *testing.T) {
 		t.Error("EvalRule() should return false when operator evaluation fails")
 	}
 }
-

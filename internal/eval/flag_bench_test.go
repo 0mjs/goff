@@ -19,7 +19,7 @@ func BenchmarkEvalBool(b *testing.B) {
 
 	ctx := Context{
 		Key: "user:123",
-		Attrs: map[string]interface{}{
+		Attrs: map[string]any{
 			"plan": "pro",
 		},
 	}
@@ -54,7 +54,7 @@ func BenchmarkEvalBool_WithRule(b *testing.B) {
 
 	ctx := Context{
 		Key: "user:123",
-		Attrs: map[string]interface{}{
+		Attrs: map[string]any{
 			"plan": "pro",
 		},
 	}
@@ -78,8 +78,8 @@ func BenchmarkEvalString(b *testing.B) {
 	}
 
 	ctx := Context{
-		Key: "user:123",
-		Attrs: map[string]interface{}{},
+		Key:   "user:123",
+		Attrs: map[string]any{},
 	}
 
 	b.ResetTimer()
@@ -101,8 +101,8 @@ func BenchmarkEvalBool_Concurrent(b *testing.B) {
 
 	b.RunParallel(func(pb *testing.PB) {
 		ctx := Context{
-			Key: "user:123",
-			Attrs: map[string]interface{}{},
+			Key:   "user:123",
+			Attrs: map[string]any{},
 		}
 		for pb.Next() {
 			_, _ = EvalBool(flag, "test_flag", ctx, false)
@@ -115,20 +115,19 @@ func BenchmarkEvalString_Concurrent(b *testing.B) {
 		Enabled: true,
 		Type:    "string",
 		Variants: map[string]int{
-			"red":   50,
-			"blue":  50,
+			"red":  50,
+			"blue": 50,
 		},
 		Default: "red",
 	}
 
 	b.RunParallel(func(pb *testing.PB) {
 		ctx := Context{
-			Key: "user:123",
-			Attrs: map[string]interface{}{},
+			Key:   "user:123",
+			Attrs: map[string]any{},
 		}
 		for pb.Next() {
 			_, _ = EvalString(flag, "test_flag", ctx, "default")
 		}
 	})
 }
-

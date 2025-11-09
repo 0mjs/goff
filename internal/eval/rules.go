@@ -7,7 +7,7 @@ import (
 // Context represents the evaluation context.
 type Context struct {
 	Key   string
-	Attrs map[string]interface{}
+	Attrs map[string]any
 }
 
 // EvalRule evaluates a compiled rule against a context.
@@ -66,4 +66,3 @@ func EvalRule(rule *config.CompiledRule, ctx Context) bool {
 	}
 	return anyMatch
 }
-

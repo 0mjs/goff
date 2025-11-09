@@ -19,7 +19,7 @@ func FuzzEvalRule(f *testing.F) {
 
 		ctx := Context{
 			Key: "user:1",
-			Attrs: map[string]interface{}{
+			Attrs: map[string]any{
 				attr: value,
 			},
 		}
@@ -28,4 +28,3 @@ func FuzzEvalRule(f *testing.F) {
 		_ = EvalRule(rule, ctx)
 	})
 }
-

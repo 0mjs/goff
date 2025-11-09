@@ -7,11 +7,11 @@ import (
 
 func TestEvalOperator_eq(t *testing.T) {
 	tests := []struct {
-		name     string
-		attr     interface{}
-		opValue  interface{}
-		want     bool
-		wantErr  bool
+		name    string
+		attr    any
+		opValue any
+		want    bool
+		wantErr bool
 	}{
 		{"string match", "pro", "pro", true, false},
 		{"string mismatch", "basic", "pro", false, false},
@@ -56,8 +56,8 @@ func TestEvalOperator_neq(t *testing.T) {
 func TestEvalOperator_gt(t *testing.T) {
 	tests := []struct {
 		name    string
-		attr    interface{}
-		opValue interface{}
+		attr    any
+		opValue any
 		want    bool
 	}{
 		{"5 > 3", 5, 3, true},
@@ -151,7 +151,7 @@ func TestEvalOperator_lte(t *testing.T) {
 }
 
 func TestEvalOperator_in(t *testing.T) {
-	got, err := EvalOperator("pro", "in", []interface{}{"basic", "pro", "enterprise"}, nil)
+	got, err := EvalOperator("pro", "in", []any{"basic", "pro", "enterprise"}, nil)
 	if err != nil {
 		t.Fatalf("EvalOperator() error = %v", err)
 	}
@@ -159,7 +159,7 @@ func TestEvalOperator_in(t *testing.T) {
 		t.Error("EvalOperator() in should return true when value is in array")
 	}
 
-	got, err = EvalOperator("free", "in", []interface{}{"basic", "pro", "enterprise"}, nil)
+	got, err = EvalOperator("free", "in", []any{"basic", "pro", "enterprise"}, nil)
 	if err != nil {
 		t.Fatalf("EvalOperator() error = %v", err)
 	}
@@ -212,4 +212,3 @@ func TestEvalOperator_UnknownOp(t *testing.T) {
 		t.Error("EvalOperator() expected error for unknown operator")
 	}
 }
-

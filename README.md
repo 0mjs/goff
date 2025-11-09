@@ -57,12 +57,12 @@ func main() {
 
     ctx := goff.Context{
         Key: "user:123",
-        Attrs: map[string]interface{}{
+        Attrs: map[string]any{
             "plan": "pro",
         },
     }
 
-    enabled := client.Bool("new_checkout", ctx, false)
+    enabled := client.Boolean("new_checkout", ctx, false)
     if enabled {
         // Use new checkout flow
     }
@@ -187,7 +187,7 @@ reason: match
 
 ```go
 type Client interface {
-    Bool(key string, ctx Context, def bool) bool
+    Boolean(key string, ctx Context, def bool) bool
     String(key string, ctx Context, def string) string
     Close() error
 }
@@ -198,7 +198,7 @@ type Client interface {
 ```go
 type Context struct {
     Key   string                 // stable identifier for sticky bucketing
-    Attrs map[string]interface{} // attributes for targeting
+    Attrs map[string]any // attributes for targeting
 }
 ```
 

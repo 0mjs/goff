@@ -1,0 +1,55 @@
+version: 1
+flags:
+    checkout_theme:
+        enabled: true
+        type: string
+        variants:
+            blue: 30
+            green: 30
+            red: 40
+        rules:
+            - when:
+                all:
+                    - attr: theme
+                      op: eq
+                      value: dark
+              then:
+                variants:
+                    black: 100
+        default: red
+    enable_logging:
+        enabled: false
+        type: bool
+        variants: {}
+        default: true
+    log_level:
+        enabled: true
+        type: string
+        variants:
+            debug: 30
+            error: 5
+            info: 50
+            warn: 15
+        default: info
+    new_checkout:
+        enabled: true
+        type: bool
+        variants:
+            "false": 50
+            "true": 50
+        rules:
+            - when:
+                all:
+                    - attr: plan
+                      op: eq
+                      value: pro
+              then:
+                variants:
+                    "false": 10
+                    "true": 90
+        default: false
+    shitshow_ballix:
+        enabled: false
+        type: bool
+        variants: {}
+        default: true

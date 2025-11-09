@@ -13,7 +13,7 @@ type Compiled struct {
 // CompiledFlag represents a compiled flag ready for evaluation.
 type CompiledFlag struct {
 	Enabled  bool
-	Type     string // "bool" | "string"
+	Type     string         // "bool" | "string"
 	Variants map[string]int // variant -> percentage (0-100)
 	Rules    []*CompiledRule
 	Default  any // bool for bool flags, string for string flags
@@ -27,11 +27,11 @@ type CompiledRule struct {
 
 // CompiledCondition represents a compiled condition.
 type CompiledCondition struct {
-	Attr    string
-	Op      string
-	Value   interface{}
-	Regex   *regexp.Regexp // compiled regex for "matches" operator
-	IsAll   bool           // true if part of "all", false if part of "any"
+	Attr  string
+	Op    string
+	Value any
+	Regex *regexp.Regexp // compiled regex for "matches" operator
+	IsAll bool           // true if part of "all", false if part of "any"
 }
 
 // Compile compiles a Config into a Compiled configuration.
@@ -60,7 +60,7 @@ func compileFlag(flagKey string, flag *Flag) (*CompiledFlag, error) {
 		Enabled:  flag.Enabled,
 		Type:     flag.Type,
 		Variants: make(map[string]int, len(flag.Variants)),
-		Rules:   make([]*CompiledRule, 0, len(flag.Rules)),
+		Rules:    make([]*CompiledRule, 0, len(flag.Rules)),
 		Default:  flag.Default,
 	}
 
@@ -142,4 +142,3 @@ func compileCondition(cond *AttributeCondition, isAll bool) (*CompiledCondition,
 
 	return compiled, nil
 }
-

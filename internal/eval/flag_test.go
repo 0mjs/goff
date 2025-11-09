@@ -17,7 +17,7 @@ func TestEvalBool_Enabled(t *testing.T) {
 		Default: false,
 	}
 
-	ctx := Context{Key: "user:1", Attrs: map[string]interface{}{}}
+	ctx := Context{Key: "user:1", Attrs: map[string]any{}}
 
 	result, reason := EvalBool(flag, "test", ctx, false)
 
@@ -40,7 +40,7 @@ func TestEvalBool_Disabled(t *testing.T) {
 		Default: false,
 	}
 
-	ctx := Context{Key: "user:1", Attrs: map[string]interface{}{}}
+	ctx := Context{Key: "user:1", Attrs: map[string]any{}}
 
 	result, reason := EvalBool(flag, "test", ctx, true)
 
@@ -53,7 +53,7 @@ func TestEvalBool_Disabled(t *testing.T) {
 }
 
 func TestEvalBool_Missing(t *testing.T) {
-	ctx := Context{Key: "user:1", Attrs: map[string]interface{}{}}
+	ctx := Context{Key: "user:1", Attrs: map[string]any{}}
 
 	result, reason := EvalBool(nil, "test", ctx, true)
 
@@ -89,7 +89,7 @@ func TestEvalBool_WithRule(t *testing.T) {
 
 	ctx := Context{
 		Key: "user:1",
-		Attrs: map[string]interface{}{
+		Attrs: map[string]any{
 			"plan": "pro",
 		},
 	}
@@ -116,7 +116,7 @@ func TestEvalString_Enabled(t *testing.T) {
 		Default: "red",
 	}
 
-	ctx := Context{Key: "user:1", Attrs: map[string]interface{}{}}
+	ctx := Context{Key: "user:1", Attrs: map[string]any{}}
 
 	result, reason := EvalString(flag, "test", ctx, "default")
 
@@ -135,7 +135,7 @@ func TestEvalString_Disabled(t *testing.T) {
 		Default: "red",
 	}
 
-	ctx := Context{Key: "user:1", Attrs: map[string]interface{}{}}
+	ctx := Context{Key: "user:1", Attrs: map[string]any{}}
 
 	result, reason := EvalString(flag, "test", ctx, "default")
 
@@ -170,7 +170,7 @@ func TestEvalString_WithRule(t *testing.T) {
 
 	ctx := Context{
 		Key: "user:1",
-		Attrs: map[string]interface{}{
+		Attrs: map[string]any{
 			"theme": "dark",
 		},
 	}
@@ -184,4 +184,3 @@ func TestEvalString_WithRule(t *testing.T) {
 		t.Errorf("EvalString() reason = %v, want Match", reason)
 	}
 }
-

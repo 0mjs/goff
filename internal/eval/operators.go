@@ -9,7 +9,7 @@ import (
 
 // EvalOperator evaluates an attribute condition.
 // Returns (match, error). If error is non-nil, the condition should be skipped.
-func EvalOperator(attrValue interface{}, op string, opValue interface{}, compiledRegex *regexp.Regexp) (bool, error) {
+func EvalOperator(attrValue any, op string, opValue any, compiledRegex *regexp.Regexp) (bool, error) {
 	switch op {
 	case "eq":
 		return eq(attrValue, opValue)
@@ -35,7 +35,7 @@ func EvalOperator(attrValue interface{}, op string, opValue interface{}, compile
 	}
 }
 
-func eq(attrValue, opValue interface{}) (bool, error) {
+func eq(attrValue, opValue any) (bool, error) {
 	// Direct comparison first
 	if attrValue == opValue {
 		return true, nil
@@ -54,7 +54,7 @@ func eq(attrValue, opValue interface{}) (bool, error) {
 	return attrStr == opStr, nil
 }
 
-func compare(attrValue, opValue interface{}, allowedResults ...int) (bool, error) {
+func compare(attrValue, opValue any, allowedResults ...int) (bool, error) {
 	attrNum, attrOk := toFloat64(attrValue)
 	opNum, opOk := toFloat64(opValue)
 
@@ -77,9 +77,9 @@ func compare(attrValue, opValue interface{}, allowedResults ...int) (bool, error
 	return false, nil
 }
 
-func in(attrValue, opValue interface{}) (bool, error) {
+func in(attrValue, opValue any) (bool, error) {
 	// opValue should be a slice/array
-	opSlice, ok := opValue.([]interface{})
+	opSlice, ok := opValue.([]any)
 	if !ok {
 		return false, fmt.Errorf("'in' operator requires array value")
 	}
@@ -93,13 +93,13 @@ func in(attrValue, opValue interface{}) (bool, error) {
 	return false, nil
 }
 
-func contains(attrValue, opValue interface{}) (bool, error) {
+func contains(attrValue, opValue any) (bool, error) {
 	attrStr := fmt.Sprintf("%v", attrValue)
 	opStr := fmt.Sprintf("%v", opValue)
 	return strings.Contains(attrStr, opStr), nil
 }
 
-func matches(attrValue interface{}, regex *regexp.Regexp) (bool, error) {
+func matches(attrValue any, regex *regexp.Regexp) (bool, error) {
 	if regex == nil {
 		return false, fmt.Errorf("regex not compiled")
 	}
@@ -107,7 +107,7 @@ func matches(attrValue interface{}, regex *regexp.Regexp) (bool, error) {
 	return regex.MatchString(attrStr), nil
 }
 
-func toFloat64(v interface{}) (float64, bool) {
+func toFloat64(v any) (float64, bool) {
 	switch n := v.(type) {
 	case float64:
 		return n, true
@@ -143,4 +143,3 @@ func toFloat64(v interface{}) (float64, bool) {
 		return 0, false
 	}
 }
-

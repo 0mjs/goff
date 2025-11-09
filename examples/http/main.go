@@ -43,17 +43,17 @@ func main() {
 		// Create evaluation context
 		ctx := goff.Context{
 			Key: fmt.Sprintf("user:%s", userID),
-			Attrs: map[string]interface{}{
+			Attrs: map[string]any{
 				"plan": plan,
 			},
 		}
 
 		// Evaluate flags
-		newCheckout := client.Bool("new_checkout", ctx, false)
+		newCheckout := client.Boolean("new_checkout", ctx, false)
 		theme := client.String("checkout_theme", ctx, "default")
 
 		// Build response
-		response := map[string]interface{}{
+		response := map[string]any{
 			"user_id":      userID,
 			"new_checkout": newCheckout,
 			"theme":        theme,

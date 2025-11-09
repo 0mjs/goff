@@ -9,7 +9,7 @@ import (
 
 // Client evaluates flags against an immutable configuration snapshot.
 type Client interface {
-	Bool(key string, ctx Context, def bool) bool
+	Boolean(key string, ctx Context, def bool) bool
 	String(key string, ctx Context, def string) string
 	Close() error
 }
@@ -20,15 +20,15 @@ type client struct {
 	closer func() error
 }
 
-// Bool evaluates a boolean flag.
-func (c *client) Bool(key string, ctx Context, def bool) bool {
+// Boolean evaluates a boolean flag.
+func (c *client) Boolean(key string, ctx Context, def bool) bool {
 	compiled := c.config.Load()
 	if compiled == nil {
 		return def
 	}
 
 	flag := (*compiled).Flags[key]
-	
+
 	evalCtx := eval.Context{
 		Key:   ctx.Key,
 		Attrs: ctx.Attrs,
@@ -55,7 +55,7 @@ func (c *client) String(key string, ctx Context, def string) string {
 	}
 
 	flag := (*compiled).Flags[key]
-	
+
 	evalCtx := eval.Context{
 		Key:   ctx.Key,
 		Attrs: ctx.Attrs,
@@ -77,4 +77,3 @@ func (c *client) Close() error {
 	}
 	return nil
 }
-
